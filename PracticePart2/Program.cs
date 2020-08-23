@@ -245,7 +245,7 @@ namespace PracticePart2
         {
             //当前运行时路径
             var directoryInfo = new DirectoryInfo(Directory.GetCurrentDirectory());
-            var fileName = $@"PracticePart1-{DateTime.Now:yyyyMMddHHmmss}.xlsx";
+            var fileName = $@"PracticePart2-{DateTime.Now:yyyyMMddHHmmss}.xlsx";
 
             //文件路径，保存在运行时路径下
             var filepath = Path.Combine(directoryInfo.ToString(), fileName);

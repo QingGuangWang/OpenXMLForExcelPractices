@@ -29,13 +29,40 @@ namespace PracticePart4
                 {
                     Id = workbookPart.GetIdOfPart(worksheetPart),
                     SheetId = 1,
-                    Name = "MegerSheet"
+                    Name = "MergeSheet"
                 }));
 
-            //构建Worksheet根节点，同时追加子节点SheetData
-            worksheetPart.Worksheet = new Worksheet(new SheetData());
-            
 
+            //构建Worksheet根节点，同时追加子节点SheetData
+            worksheetPart.Worksheet = new Worksheet();
+            var sheetData = new SheetData();
+            var mergeCells = new MergeCells();
+            worksheetPart.Worksheet.Append(sheetData, mergeCells);
+
+            //合并A1 - A3
+            mergeCells.AppendChild(new MergeCell()
+            {
+                Reference = new StringValue("A1:A3")
+            });
+            //合并B1 - B5
+            mergeCells.AppendChild(new MergeCell()
+            {
+                Reference = new StringValue("B1:B5")
+            });
+
+            sheetData.AppendChild(new Row(new []
+            {
+                new Cell()
+                {
+                    CellValue = new CellValue("111222"),
+                    DataType = new EnumValue<CellValues>(CellValues.String)
+                },
+                new Cell()
+                {
+                    CellValue = new CellValue("333444"),
+                    DataType = new EnumValue<CellValues>(CellValues.String)
+                }
+            }));
 
             //保存
             document.WorkbookPart.Workbook.Save();

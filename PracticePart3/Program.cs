@@ -369,7 +369,7 @@ namespace PracticePart3
             //SheetFormatProperties, 设置默认行高度，宽度， 值类型是Double类型。
             var sheetFormatProperties = new SheetFormatProperties()
             {
-                DefaultColumnWidth = 20,
+                DefaultColumnWidth = 15,
                 DefaultRowHeight = 13.5
             };
 
@@ -387,7 +387,7 @@ namespace PracticePart3
             {
                 Min = 2,
                 Max = 3,
-                Width = 15d,
+                Width = 10d,
                 CustomWidth = true
             };
 
@@ -429,7 +429,7 @@ namespace PracticePart3
             row.AppendChild(CreateTableHeaderCell("出勤天数", shareStringPart));
             row.AppendChild(CreateTableHeaderCell("缺勤天数", shareStringPart));
 
-            //最后一列，是富文本 出勤率(单位: %)
+            //最后一列，是富文本 出勤率(单位: %), 富文本则不是简单的Text类，而是需要用到 Run类，RunProperties类
 
             var richTextStringItem = new SharedStringItem();
             richTextStringItem.AppendChild(new Run(new Text("出勤率(")));
@@ -440,7 +440,7 @@ namespace PracticePart3
                 {
                     new Bold(),  //加粗
                     new FontSize() { Val = 11 },
-                    new FontName() { Val = "微软雅黑" },
+                    new RunFont() { Val = "微软雅黑" },
                     new Color()
                     {
                         Rgb = new HexBinaryValue()
@@ -503,7 +503,338 @@ namespace PracticePart3
         /// <param name="worksheetPart">WorksheetPart 对象</param>
         public static void CreateTableBody(WorksheetPart worksheetPart)
         {
+            //获取Worksheet对象
+            var worksheet = worksheetPart.Worksheet;
 
+            //获取表格的数据对象，SheetData
+            var sheetData = worksheet.GetFirstChild<SheetData>();
+
+            //插入第一行数据，作为表头数据 创建 Row 对象，表示一行
+            var row1 = new Row
+            {
+                RowIndex = 2
+            };
+
+            row1.Append(new OpenXmlElement[]
+            {
+                new Cell()
+                {
+                    CellValue = new CellValue("1"),
+                    StyleIndex = 2,
+                    DataType = new EnumValue<CellValues>(CellValues.String)
+                },
+                new Cell()
+                {
+                    CellValue = new CellValue("张同事"),
+                    StyleIndex = 2,
+                    DataType = new EnumValue<CellValues>(CellValues.String)
+                },
+                new Cell()
+                {
+                    CellValue = new CellValue("技术部"),
+                    StyleIndex = 2,
+                    DataType = new EnumValue<CellValues>(CellValues.String)
+                },
+                new Cell()
+                {
+                    CellValue = new CellValue("19"),
+                    StyleIndex = 2,
+                    DataType = new EnumValue<CellValues>(CellValues.String)
+                },
+                new Cell()
+                {
+                    InlineString = new InlineString(
+                        new Run(new OpenXmlElement []
+                        {
+                            new RunProperties(new OpenXmlElement []
+                            {
+                                new FontSize() { Val = 11 },
+                                new RunFont() { Val = "微软雅黑" },
+                                new Color(){
+                                    Rgb = new HexBinaryValue()
+                                    {
+                                        Value = System.Drawing.ColorTranslator.ToHtml(
+                                                System.Drawing.Color.FromArgb(
+                                                    System.Drawing.Color.Red.A, System.Drawing.Color.Red.R,
+                                                    System.Drawing.Color.Red.G, System.Drawing.Color.Red.B))
+                                            .Replace("#", "")
+                                    }
+                                },
+                            }),
+                            new Text("1")
+                        })),
+                    StyleIndex = 2,
+                    DataType = new EnumValue<CellValues>(CellValues.InlineString)
+                },
+                new Cell()
+                {
+                    InlineString = new InlineString(
+                        new Run(new OpenXmlElement []
+                        {
+                            new RunProperties(new OpenXmlElement []
+                            {
+                                new FontSize() { Val = 11 },
+                                new RunFont() { Val = "微软雅黑" },
+                                new Color(){
+                                    Rgb = new HexBinaryValue()
+                                    {
+                                        Value = System.Drawing.ColorTranslator.ToHtml(
+                                                System.Drawing.Color.FromArgb(
+                                                    System.Drawing.Color.Orange.A, System.Drawing.Color.Orange.R,
+                                                    System.Drawing.Color.Orange.G, System.Drawing.Color.Orange.B))
+                                            .Replace("#", "")
+                                    }
+                                },
+                            }),
+                            new Text("95")
+                        }),
+                        new Run(new RunProperties(new OpenXmlElement []
+                            {
+                                new FontSize() { Val = 11 },
+                                new RunFont() { Val = "微软雅黑" },
+                            }),
+                            new Text("%"))),
+                    StyleIndex = 2,
+                    DataType = new EnumValue<CellValues>(CellValues.InlineString)
+                }
+            });
+
+            sheetData.AppendChild(row1);
+
+            var row2 = new Row
+            {
+                RowIndex = 3
+            };
+
+            row2.Append(new OpenXmlElement[]
+            {
+                new Cell()
+                {
+                    CellValue = new CellValue("2"),
+                    StyleIndex = 2,
+                    DataType = new EnumValue<CellValues>(CellValues.String)
+                },
+                new Cell()
+                {
+                    CellValue = new CellValue("李同事"),
+                    StyleIndex = 2,
+                    DataType = new EnumValue<CellValues>(CellValues.String)
+                },
+                new Cell()
+                {
+                    CellValue = new CellValue("技术部"),
+                    StyleIndex = 2,
+                    DataType = new EnumValue<CellValues>(CellValues.String)
+                },
+                new Cell()
+                {
+                    CellValue = new CellValue("18"),
+                    StyleIndex = 2,
+                    DataType = new EnumValue<CellValues>(CellValues.String)
+                },
+                new Cell()
+                {
+                    InlineString = new InlineString(
+                        new Run(new OpenXmlElement []
+                        {
+                            new RunProperties(new OpenXmlElement []
+                            {
+                                new FontSize() { Val = 11 },
+                                new RunFont() { Val = "微软雅黑" },
+                                new Color(){
+                                    Rgb = new HexBinaryValue()
+                                    {
+                                        Value = System.Drawing.ColorTranslator.ToHtml(
+                                                System.Drawing.Color.FromArgb(
+                                                    System.Drawing.Color.Red.A, System.Drawing.Color.Red.R,
+                                                    System.Drawing.Color.Red.G, System.Drawing.Color.Red.B))
+                                            .Replace("#", "")
+                                    }
+                                },
+                            }),
+                            new Text("2")
+                        })),
+                    StyleIndex = 2,
+                    DataType = new EnumValue<CellValues>(CellValues.InlineString)
+                },
+                new Cell()
+                {
+                    InlineString = new InlineString(
+                        new Run(new OpenXmlElement []
+                        {
+                            new RunProperties(new OpenXmlElement []
+                            {
+                                new FontSize() { Val = 11 },
+                                new RunFont() { Val = "微软雅黑" },
+                                new Color(){
+                                    Rgb = new HexBinaryValue()
+                                    {
+                                        Value = System.Drawing.ColorTranslator.ToHtml(
+                                                System.Drawing.Color.FromArgb(
+                                                    System.Drawing.Color.Orange.A, System.Drawing.Color.Orange.R,
+                                                    System.Drawing.Color.Orange.G, System.Drawing.Color.Orange.B))
+                                            .Replace("#", "")
+                                    }
+                                },
+                            }),
+                            new Text("90")
+                        }),
+                        new Run(new RunProperties(new OpenXmlElement []
+                            {
+                                new FontSize() { Val = 11 },
+                                new RunFont() { Val = "微软雅黑" },
+                            }),
+                            new Text("%"))),
+                    StyleIndex = 2,
+                    DataType = new EnumValue<CellValues>(CellValues.InlineString)
+                }
+            });
+
+            sheetData.AppendChild(row2);
+
+            var row3 = new Row
+            {
+                RowIndex = 4
+            };
+
+            row3.Append(new OpenXmlElement[]
+            {
+                new Cell()
+                {
+                    CellValue = new CellValue("3"),
+                    StyleIndex = 2,
+                    DataType = new EnumValue<CellValues>(CellValues.String)
+                },
+                new Cell()
+                {
+                    CellValue = new CellValue("王同事"),
+                    StyleIndex = 2,
+                    DataType = new EnumValue<CellValues>(CellValues.String)
+                },
+                new Cell()
+                {
+                    CellValue = new CellValue("技术部"),
+                    StyleIndex = 2,
+                    DataType = new EnumValue<CellValues>(CellValues.String)
+                },
+                new Cell()
+                {
+                    CellValue = new CellValue("20"),
+                    StyleIndex = 2,
+                    DataType = new EnumValue<CellValues>(CellValues.String)
+                },
+                new Cell()
+                {
+                    CellValue = new CellValue("0"),
+                    StyleIndex = 2,
+                    DataType = new EnumValue<CellValues>(CellValues.String)
+                },
+                new Cell()
+                {
+                    InlineString = new InlineString(
+                        new Run(new OpenXmlElement []
+                        {
+                            new RunProperties(new OpenXmlElement []
+                            {
+                                new FontSize() { Val = 11 },
+                                new RunFont() { Val = "微软雅黑" },
+                                new Color(){
+                                    Rgb = new HexBinaryValue()
+                                    {
+                                        Value = System.Drawing.ColorTranslator.ToHtml(
+                                                System.Drawing.Color.FromArgb(
+                                                    System.Drawing.Color.Green.A, System.Drawing.Color.Green.R,
+                                                    System.Drawing.Color.Green.G, System.Drawing.Color.Green.B))
+                                            .Replace("#", "")
+                                    }
+                                },
+                            }),
+                            new Text("100")
+                        }),
+                        new Run(new RunProperties(new OpenXmlElement []
+                            {
+                                new FontSize() { Val = 11 },
+                                new RunFont() { Val = "微软雅黑" },
+                            }),
+                            new Text("%"))),
+                    StyleIndex = 2,
+                    DataType = new EnumValue<CellValues>(CellValues.InlineString)
+                }
+            });
+
+            sheetData.AppendChild(row3);
+
+            var row4 = new Row
+            {
+                RowIndex = 5
+            };
+
+            row4.Append(new OpenXmlElement[]
+            {
+                new Cell()
+                {
+                    CellValue = new CellValue("4"),
+                    StyleIndex = 2,
+                    DataType = new EnumValue<CellValues>(CellValues.String)
+                },
+                new Cell()
+                {
+                    CellValue = new CellValue("刘同事"),
+                    StyleIndex = 2,
+                    DataType = new EnumValue<CellValues>(CellValues.String)
+                },
+                new Cell()
+                {
+                    CellValue = new CellValue("人力资源部"),
+                    StyleIndex = 2,
+                    DataType = new EnumValue<CellValues>(CellValues.String)
+                },
+                new Cell()
+                {
+                    CellValue = new CellValue("20"),
+                    StyleIndex = 2,
+                    DataType = new EnumValue<CellValues>(CellValues.String)
+                },
+                new Cell()
+                {
+                    CellValue = new CellValue("0"),
+                    StyleIndex = 2,
+                    DataType = new EnumValue<CellValues>(CellValues.String)
+                },
+                new Cell()
+                {
+                    InlineString = new InlineString(
+                        new Run(new OpenXmlElement []
+                        {
+                            new RunProperties(new OpenXmlElement []
+                            {
+                                new FontSize() { Val = 11 },
+                                new RunFont() { Val = "微软雅黑" },
+                                new Color(){
+                                    Rgb = new HexBinaryValue()
+                                    {
+                                        Value = System.Drawing.ColorTranslator.ToHtml(
+                                                System.Drawing.Color.FromArgb(
+                                                    System.Drawing.Color.Green.A, System.Drawing.Color.Green.R,
+                                                    System.Drawing.Color.Green.G, System.Drawing.Color.Green.B))
+                                            .Replace("#", "")
+                                    }
+                                },
+                            }),
+                            new Text("100")
+                        }),
+                        new Run(new RunProperties(new OpenXmlElement []
+                            {
+                                new FontSize() { Val = 11 },
+                                new RunFont() { Val = "微软雅黑" },
+                            }),
+                            new Text("%"))),
+                    StyleIndex = 2,
+                    DataType = new EnumValue<CellValues>(CellValues.InlineString)
+                }
+            });
+
+            sheetData.AppendChild(row4);
         }
 
         /// <summary>
